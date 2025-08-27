@@ -48,7 +48,10 @@ np.random.seed(42)
 tf.random.set_seed(42)
 
 class ICSAppClassifier:
-    def __init__(self, data_dir="/home/asurite.ad.asu.edu/asawan15/ad_research/ivdetector"):
+    def __init__(self, data_dir=None):
+        # Default to the directory containing this file if no data_dir is provided
+        if data_dir is None:
+            data_dir = os.path.dirname(os.path.abspath(__file__))
         self.data_dir = data_dir
         self.ics_file = os.path.join(data_dir, "training_data_ics.csv")
         self.non_ics_file = os.path.join(data_dir, "training_data_non_ics.csv")
