@@ -14,7 +14,6 @@ Models implemented:
 2. Support Vector Machines
 3. Naive Bayes
 4. Random Forest
-5. Recurrent Neural Network (RNN)
 6. Long Short Term Memory (LSTM)
 """
 
@@ -77,15 +76,6 @@ class ICSAppClassifier:
                 'max_depth': 15,
                 'random_state': 42
             },
-            #'lstm': {
-            #    'vocab_size': 8000,
-            #    'embedding_dim': 128,
-            #    'lstm_units': 64,
-            #    'max_length': 150,
-            #    'epochs': 25,
-            #    'batch_size': 32,
-            #    'patience': 3
-            #}
             'lstm': {
                 'vocab_size': 8000,
                 'embedding_dim': 32,
@@ -179,11 +169,11 @@ class ICSAppClassifier:
         )
         
         # Prepare data for neural networks (tokenized sequences)
-        self.tokenizer = Tokenizer(num_words=self.model_params['rnn']['vocab_size'], oov_token='<OOV>')
+        self.tokenizer = Tokenizer(num_words=self.model_params['lstm']['vocab_size'], oov_token='<OOV>')
         self.tokenizer.fit_on_texts(self.df['description_processed'])
         
         sequences = self.tokenizer.texts_to_sequences(self.df['description_processed'])
-        self.X_seq = pad_sequences(sequences, maxlen=self.model_params['rnn']['max_length'])
+        self.X_seq = pad_sequences(sequences, maxlen=self.model_params['lstm']['max_length'])
         
         # Split data for neural networks
         self.X_train_seq, self.X_test_seq, self.y_train_seq, self.y_test_seq = train_test_split(

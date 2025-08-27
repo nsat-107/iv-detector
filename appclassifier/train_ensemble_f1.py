@@ -268,19 +268,19 @@ class MonteCarloF1Trainer:
                     
                     try:
                         bert_classifier.save_model(backup_model_path, backup_tokenizer_path)
-                        logging.info(f"💾 BERT Backup saved (new best): F1 {test_metrics['f1_score']:.4f}")
+                        logging.info(f"BERT Backup saved (new best): F1 {test_metrics['f1_score']:.4f}")
                     except Exception as e:
                         logging.error(f"Error saving BERT backup: {e}")
                     
                     # Update best tracking
                     best_f1 = test_metrics['f1_score']
                     self.best_bert_model = bert_classifier
-                    logging.info(f"🎯 NEW BEST BERT F1: {best_f1:.4f}")
+                    logging.info(f"NEW BEST BERT F1: {best_f1:.4f}")
                 
                 # Check if target achieved
                 if test_metrics['f1_score'] >= self.target_f1:
                     target_achieved = True
-                    logging.info(f"🎉 BERT TARGET ACHIEVED! F1: {test_metrics['f1_score']:.4f}")
+                    logging.info(f"BERT TARGET ACHIEVED! F1: {test_metrics['f1_score']:.4f}")
                     
                     # Save the successful model
                     model_path = os.path.join(self.models_dir, f'best_bert_f1_{test_metrics["f1_score"]:.4f}_iter_{iteration}.pth')
@@ -288,8 +288,8 @@ class MonteCarloF1Trainer:
                     
                     try:
                         bert_classifier.save_model(model_path, tokenizer_path)
-                        logging.info(f"✅ BERT Model saved to: {model_path}")
-                        logging.info(f"✅ BERT Tokenizer saved to: {tokenizer_path}")
+                        logging.info(f"BERT Model saved to: {model_path}")
+                        logging.info(f"BERT Tokenizer saved to: {tokenizer_path}")
                     except Exception as e:
                         logging.error(f"Error saving BERT model: {e}")
                     
@@ -318,9 +318,9 @@ class MonteCarloF1Trainer:
         }
         
         if target_achieved:
-            logging.info(f"\n✅ BERT SUCCESS: Target achieved in {iteration} runs")
+            logging.info(f"\nBERT SUCCESS: Target achieved in {iteration} runs")
         else:
-            logging.info(f"\n❌ BERT: Target not achieved in {self.max_runs} runs (best F1: {best_f1:.4f})")
+            logging.info(f"\nBERT: Target not achieved in {self.max_runs} runs (best F1: {best_f1:.4f})")
         
         return bert_summary
     
@@ -414,19 +414,19 @@ class MonteCarloF1Trainer:
                     
                     try:
                         bilstm_classifier.save_model(backup_model_path, backup_tokenizer_path)
-                        logging.info(f"💾 BiLSTM Backup saved (new best): F1 {test_metrics['f1_score']:.4f}")
+                        logging.info(f"BiLSTM Backup saved (new best): F1 {test_metrics['f1_score']:.4f}")
                     except Exception as e:
                         logging.error(f"Error saving BiLSTM backup: {e}")
                     
                     # Update best tracking
                     best_f1 = test_metrics['f1_score']
                     self.best_bilstm_model = bilstm_classifier
-                    logging.info(f"🎯 NEW BEST BiLSTM F1: {best_f1:.4f}")
+                    logging.info(f"NEW BEST BiLSTM F1: {best_f1:.4f}")
                 
                 # Check if target achieved
                 if test_metrics['f1_score'] >= self.target_f1:
                     target_achieved = True
-                    logging.info(f"🎉 BiLSTM TARGET ACHIEVED! F1: {test_metrics['f1_score']:.4f}")
+                    logging.info(f"BiLSTM TARGET ACHIEVED! F1: {test_metrics['f1_score']:.4f}")
                     
                     # Save the successful model
                     model_path = os.path.join(self.models_dir, f'best_bilstm_f1_{test_metrics["f1_score"]:.4f}_iter_{iteration}.h5')
@@ -434,8 +434,8 @@ class MonteCarloF1Trainer:
                     
                     try:
                         bilstm_classifier.save_model(model_path, tokenizer_path)
-                        logging.info(f"✅ BiLSTM Model saved to: {model_path}")
-                        logging.info(f"✅ BiLSTM Tokenizer saved to: {tokenizer_path}")
+                        logging.info(f"BiLSTM Model saved to: {model_path}")
+                        logging.info(f"BiLSTM Tokenizer saved to: {tokenizer_path}")
                     except Exception as e:
                         logging.error(f"Error saving BiLSTM model: {e}")
                     
@@ -464,9 +464,9 @@ class MonteCarloF1Trainer:
         }
         
         if target_achieved:
-            logging.info(f"\n✅ BiLSTM SUCCESS: Target achieved in {iteration} runs")
+            logging.info(f"\nBiLSTM SUCCESS: Target achieved in {iteration} runs")
         else:
-            logging.info(f"\n❌ BiLSTM: Target not achieved in {self.max_runs} runs (best F1: {best_f1:.4f})")
+            logging.info(f"\nBiLSTM: Target not achieved in {self.max_runs} runs (best F1: {best_f1:.4f})")
         
         return bilstm_summary
     
@@ -474,10 +474,10 @@ class MonteCarloF1Trainer:
         """Run complete Monte Carlo training for both models"""
         self.start_time = time.time()
         
-        logging.info("🚀 STARTING MONTE CARLO F1 TRAINING")
-        logging.info(f"📊 Target F1: {self.target_f1}")
-        logging.info(f"🔄 Max runs per model: {self.max_runs}")
-        logging.info(f"📝 Results will be saved to: {self.models_dir}")
+        logging.info("STARTING MONTE CARLO F1 TRAINING")
+        logging.info(f"Target F1: {self.target_f1}")
+        logging.info(f"Max runs per model: {self.max_runs}")
+        logging.info(f"Results will be saved to: {self.models_dir}")
         
         # Train BERT first
         bert_summary = self.train_bert_until_target(ics_file, non_ics_file)
@@ -513,7 +513,7 @@ class MonteCarloF1Trainer:
         with open(results_file, 'w') as f:
             json.dump(results, f, indent=2, default=str)
         
-        logging.info(f"📁 Results saved to: {results_file}")
+        logging.info(f"Results saved to: {results_file}")
     
     def print_final_statistics(self, results: Dict[str, Any]):
         """Print comprehensive final statistics"""
@@ -522,23 +522,23 @@ class MonteCarloF1Trainer:
         logging.info(f"{'='*100}")
         
         total_time = results['training_time']
-        logging.info(f"⏱️  Total Training Time: {total_time/60:.1f} minutes")
-        logging.info(f"🎯 Target F1 Score: {self.target_f1}")
-        logging.info(f"🔄 Maximum Runs Per Model: {self.max_runs}")
+        logging.info(f"Total Training Time: {total_time/60:.1f} minutes")
+        logging.info(f"Target F1 Score: {self.target_f1}")
+        logging.info(f"Maximum Runs Per Model: {self.max_runs}")
         
         # BERT Statistics
         bert_summary = results['bert_summary']
-        logging.info(f"\n🤖 BERT RESULTS:")
-        logging.info(f"  ✅ Target Achieved: {'YES' if bert_summary['target_achieved'] else 'NO'}")
-        logging.info(f"  🔢 Runs Required: {bert_summary['runs_required']}")
-        logging.info(f"  🏆 Best F1 Score: {bert_summary['best_f1']:.4f}")
+        logging.info(f"\nBERT RESULTS:")
+        logging.info(f"Target Achieved: {'YES' if bert_summary['target_achieved'] else 'NO'}")
+        logging.info(f"Runs Required: {bert_summary['runs_required']}")
+        logging.info(f"Best F1 Score: {bert_summary['best_f1']:.4f}")
         
         if bert_summary['all_results']:
             # Find the best performing iteration
             best_bert_iter = max(bert_summary['all_results'], key=lambda x: x['test_metrics']['f1_score'])
             final_bert = bert_summary['all_results'][-1]
             
-            logging.info(f"  📊 BEST Performance (Iteration {best_bert_iter['iteration']}):")
+            logging.info(f"BEST Performance (Iteration {best_bert_iter['iteration']}):")
             logging.info(f"    • Accuracy:  {best_bert_iter['test_metrics']['accuracy']:.4f}")
             logging.info(f"    • Precision: {best_bert_iter['test_metrics']['precision']:.4f}")
             logging.info(f"    • Recall:    {best_bert_iter['test_metrics']['recall']:.4f}")
@@ -546,7 +546,7 @@ class MonteCarloF1Trainer:
             logging.info(f"    • Training Time: {best_bert_iter['training_time']:.1f}s")
             
             if best_bert_iter != final_bert:
-                logging.info(f"  📊 Final Iteration ({final_bert['iteration']}) Metrics:")
+                logging.info(f"Final Iteration ({final_bert['iteration']}) Metrics:")
                 logging.info(f"    • Accuracy:  {final_bert['test_metrics']['accuracy']:.4f}")
                 logging.info(f"    • Precision: {final_bert['test_metrics']['precision']:.4f}")
                 logging.info(f"    • Recall:    {final_bert['test_metrics']['recall']:.4f}")
@@ -554,17 +554,17 @@ class MonteCarloF1Trainer:
         
         # BiLSTM Statistics
         bilstm_summary = results['bilstm_summary']
-        logging.info(f"\n🧠 BiLSTM RESULTS:")
-        logging.info(f"  ✅ Target Achieved: {'YES' if bilstm_summary['target_achieved'] else 'NO'}")
-        logging.info(f"  🔢 Runs Required: {bilstm_summary['runs_required']}")
-        logging.info(f"  🏆 Best F1 Score: {bilstm_summary['best_f1']:.4f}")
+        logging.info(f"\nBiLSTM RESULTS:")
+        logging.info(f"Target Achieved: {'YES' if bilstm_summary['target_achieved'] else 'NO'}")
+        logging.info(f"Runs Required: {bilstm_summary['runs_required']}")
+        logging.info(f"Best F1 Score: {bilstm_summary['best_f1']:.4f}")
         
         if bilstm_summary['all_results']:
             # Find the best performing iteration
             best_bilstm_iter = max(bilstm_summary['all_results'], key=lambda x: x['test_metrics']['f1_score'])
             final_bilstm = bilstm_summary['all_results'][-1]
             
-            logging.info(f"  📊 BEST Performance (Iteration {best_bilstm_iter['iteration']}):")
+            logging.info(f"BEST Performance (Iteration {best_bilstm_iter['iteration']}):")
             logging.info(f"    • Accuracy:  {best_bilstm_iter['test_metrics']['accuracy']:.4f}")
             logging.info(f"    • Precision: {best_bilstm_iter['test_metrics']['precision']:.4f}")
             logging.info(f"    • Recall:    {best_bilstm_iter['test_metrics']['recall']:.4f}")
@@ -572,29 +572,29 @@ class MonteCarloF1Trainer:
             logging.info(f"    • Training Time: {best_bilstm_iter['training_time']:.1f}s")
             
             if best_bilstm_iter != final_bilstm:
-                logging.info(f"  📊 Final Iteration ({final_bilstm['iteration']}) Metrics:")
+                logging.info(f"Final Iteration ({final_bilstm['iteration']}) Metrics:")
                 logging.info(f"    • Accuracy:  {final_bilstm['test_metrics']['accuracy']:.4f}")
                 logging.info(f"    • Precision: {final_bilstm['test_metrics']['precision']:.4f}")
                 logging.info(f"    • Recall:    {final_bilstm['test_metrics']['recall']:.4f}")
                 logging.info(f"    • F1-Score:  {final_bilstm['test_metrics']['f1_score']:.4f}")
         
         # Overall Summary
-        logging.info(f"\n📈 OVERALL SUMMARY:")
+        logging.info(f"\nOVERALL SUMMARY:")
         success_count = sum([bert_summary['target_achieved'], bilstm_summary['target_achieved']])
-        logging.info(f"  🎯 Models Achieving Target: {success_count}/2")
+        logging.info(f"Models Achieving Target: {success_count}/2")
         total_runs = bert_summary['runs_required'] + bilstm_summary['runs_required']
-        logging.info(f"  🔄 Total Training Runs: {total_runs}")
-        logging.info(f"  ⚡ Average Time Per Run: {(total_time/total_runs)/60:.1f} minutes")
+        logging.info(f"Total Training Runs: {total_runs}")
+        logging.info(f"Average Time Per Run: {(total_time/total_runs)/60:.1f} minutes")
         
         if success_count == 2:
-            logging.info(f"\n🎉 MISSION ACCOMPLISHED! Both models achieved F1 ≥ {self.target_f1}")
+            logging.info(f"\n MISSION ACCOMPLISHED! Both models achieved F1 ≥ {self.target_f1}")
         elif success_count == 1:
             logging.info(f"\n⚡ PARTIAL SUCCESS: One model achieved F1 ≥ {self.target_f1}")
         else:
-            logging.info(f"\n🔄 CONTINUE TRAINING: Neither model achieved F1 ≥ {self.target_f1}")
+            logging.info(f"\nCONTINUE TRAINING: Neither model achieved F1 ≥ {self.target_f1}")
         
         # Show saved model files
-        logging.info(f"\n💾 SAVED MODEL FILES:")
+        logging.info(f"\nSAVED MODEL FILES:")
         import glob
         
         # Find all model files in the models directory
@@ -602,13 +602,13 @@ class MonteCarloF1Trainer:
         bilstm_models = glob.glob(os.path.join(self.models_dir, "best_bilstm_*.h5")) + glob.glob(os.path.join(self.models_dir, "bilstm_backup_*.h5"))
         
         if bert_models:
-            logging.info(f"  🤖 BERT Models:")
+            logging.info(f"BERT Models:")
             for model_file in sorted(bert_models):
                 filename = os.path.basename(model_file)
                 logging.info(f"    • {filename}")
         
         if bilstm_models:
-            logging.info(f"  🧠 BiLSTM Models:")
+            logging.info(f"BiLSTM Models:")
             for model_file in sorted(bilstm_models):
                 filename = os.path.basename(model_file)
                 logging.info(f"    • {filename}")
@@ -618,18 +618,18 @@ class MonteCarloF1Trainer:
         bilstm_tokenizers = glob.glob(os.path.join(self.models_dir, "best_bilstm_tokenizer_*.pkl")) + glob.glob(os.path.join(self.models_dir, "bilstm_backup_tokenizer_*.pkl"))
         
         if bert_tokenizers:
-            logging.info(f"  🔤 BERT Tokenizers:")
+            logging.info(f"BERT Tokenizers:")
             for tokenizer_dir in sorted(bert_tokenizers):
                 dirname = os.path.basename(tokenizer_dir)
                 logging.info(f"    • {dirname}/")
         
         if bilstm_tokenizers:
-            logging.info(f"  🔤 BiLSTM Tokenizers:")
+            logging.info(f"BiLSTM Tokenizers:")
             for tokenizer_file in sorted(bilstm_tokenizers):
                 filename = os.path.basename(tokenizer_file)
                 logging.info(f"    • {filename}")
         
-        logging.info(f"\n📁 All files saved in: {self.models_dir}/")
+        logging.info(f"\nAll files saved in: {self.models_dir}/")
         logging.info(f"{'='*100}")
 
 
@@ -656,7 +656,7 @@ def main():
     trainer = MonteCarloF1Trainer(target_f1=TARGET_F1, max_runs=MAX_RUNS)
     results = trainer.run_monte_carlo_training(ICS_FILE, NON_ICS_FILE)
     
-    logging.info("🏁 Monte Carlo F1 training completed!")
+    logging.info("Monte Carlo F1 training completed!")
 
 
 if __name__ == "__main__":

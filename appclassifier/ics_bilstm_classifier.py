@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 ICS Application BiLSTM Classifier
-Based on the IoTSpotter classification approach but adapted for ICS vs non-ICS classification.
 """
 
 import pandas as pd
@@ -27,9 +26,8 @@ warnings.filterwarnings('ignore')
 
 # Import preprocessing utilities from the reference implementation
 import sys
-#sys.path.append('/scratch/asawan15/ivdetector/IoTSpotter/classification')
-sys.path.append('/home/asurite.ad.asu.edu/asawan15/ad_research/ivdetector/IoTSpotter/classification')
 from preprocess import preprocess_one_description
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class ICSClassifier:
     def __init__(self, embedding_dim=300, max_features=3000, max_len=500):
@@ -372,9 +370,9 @@ def main():
         max_len=500
     )
     
-    # File paths
-    ics_file = '/home/asurite.ad.asu.edu/asawan15/ad_research/ivdetector/training_data_ics.csv'
-    non_ics_file = '/home/asurite.ad.asu.edu/asawan15/ad_research/ivdetector/training_data_non_ics.csv'
+    # File paths (relative to this script)
+    ics_file = os.path.join(BASE_DIR, 'training_data_ics.csv')
+    non_ics_file = os.path.join(BASE_DIR, 'training_data_non_ics.csv')
     
     # Train the model
     history = classifier.train(
@@ -384,8 +382,8 @@ def main():
         batch_size=32
     )
     
-    # Save the model
-    model_dir = '/home/asurite.ad.asu.edu/asawan15/ad_research/ivdetector/models'
+    # Save the model under a local 'model' directory beside this script
+    model_dir = os.path.join(BASE_DIR, 'model')
     os.makedirs(model_dir, exist_ok=True)
     
     model_path = os.path.join(model_dir, 'ics_bilstm_classifier.h5')

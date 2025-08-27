@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 BERT-based ICS Application Classifier
-Step 2 of the ICS classification pipeline using transformer-based approach.
 """
 
 import pandas as pd
@@ -26,8 +25,8 @@ warnings.filterwarnings('ignore')
 
 # Import preprocessing utilities from the reference implementation
 import sys
-sys.path.append('/home/asurite.ad.asu.edu/asawan15/ad_research/ivdetector/IoTSpotter/classification')
 from preprocess import preprocess_one_description
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class ICSDataset(Dataset):
@@ -542,9 +541,9 @@ def main():
         max_length=512
     )
     
-    # File paths
-    ics_file = '/home/asurite.ad.asu.edu/asawan15/ad_research/ivdetector/training_data_ics.csv'
-    non_ics_file = '/home/asurite.ad.asu.edu/asawan15/ad_research/ivdetector/training_data_non_ics.csv'
+    # File paths (relative to this script)
+    ics_file = os.path.join(BASE_DIR, 'training_data_ics.csv')
+    non_ics_file = os.path.join(BASE_DIR, 'training_data_non_ics.csv')
     
     # Train the model
     history = classifier.train(
@@ -556,8 +555,8 @@ def main():
         warmup_steps_ratio=0.1
     )
     
-    # Save the model
-    model_dir = '/home/asurite.ad.asu.edu/asawan15/ad_research/ivdetector/models'
+    # Save the model under a local 'model' directory beside this script
+    model_dir = os.path.join(BASE_DIR, 'model')
     os.makedirs(model_dir, exist_ok=True)
     
     model_path = os.path.join(model_dir, 'ics_bert_classifier.pth')
